@@ -1,0 +1,105 @@
+{% extends "html/layout.html" %}
+
+{% block title %}
+    Formation - Parcours Learning Engineer - Stackoverflow questions - générateur de tags
+{% endblock %}
+
+{% block content %}
+    <!-- Content -->
+    <!-- Layout Demo -->
+    <div class="layout-demo-wrapper">
+        <div class="layout-demo-placeholder" style="max-width: 1400px; width: 1400px;">
+
+            <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Accueil/<a href="/">Questions/</span> Tags</h4>
+
+            <!-- Basic Layout -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card mb-6">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Tags : Recommandation</h5>
+                            <small class="text-muted float-end">Titre et description de la demande</small>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="mb-3">
+                                    <label class="form-label" for="basic-icon-default-title">Titre </label>
+                                    <div class="input-group input-group-merge">
+                            <span id="basic-icon-default-title" class="input-group-text"
+                            ><i class="bx bx-edit-alt"></i
+                            ></span>
+                                        <input
+                                                type="text"
+                                                class="form-control"
+                                                id="basic-icon-default-title"
+                                                name="title"
+                                                placeholder="Entrez le titre de votre demande"
+                                                aria-label="Entrez le titre de votre demande"
+                                                aria-describedby="basic-icon-default-title"
+                                                autofocus
+                                                readonly="readonly"
+                                                value="{{ title }}"
+                                        />
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="basic-icon-default-body">Description</label>
+                                    <div class="input-group input-group-merge">
+                            <span id="basic-icon-default-body" class="input-group-text"
+                            ><i class="bx bx-comment"></i
+                            ></span>
+                                        <textarea
+                                                id="basic-icon-default-message"
+                                                name="body"
+                                                class="form-control"
+                                                placeholder="Entrez la description de votre demande"
+                                                aria-label="Entrez la description de votre demande"
+                                                aria-describedby="basic-icon-default-body"
+                                                readonly="readonly"
+                                        >{{ body }}</textarea>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card mb-6">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">Tags : Recommandation</h5>
+                            <small class="text-muted float-end">Tags propos&eacute;s</small>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="mb-3">
+                                    <label class="form-label" for="basic-icon-default-body">Tags
+                                        recommand&eacute;s</label>
+                                    <div class="input-group input-group-merge">
+                            <span id="basic-icon-default-body" class="input-group-text"
+                            ><i class="bx bx-comment"></i
+                            ></span>
+                                        <textarea
+                                                id="basic-icon-default-message"
+                                                name="body"
+                                                class="form-control"
+                                                placeholder="Entrez la description de votre demande"
+                                                aria-label="Entrez la description de votre demande"
+                                                aria-describedby="basic-icon-default-body"
+                                                readonly="readonly"
+                                        >{{ tags_prediction }}</textarea>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layout-demo-info">
+            <h4>Cliquez sur le bouton ci-dessous pour retourner sur le formulaire des questions</h4>
+            <a href="/" class="btn btn-dark"><i class="bx bx-left-arrow-alt"></i> Retourner au formulaire</a>
+        </div>
+    </div>
+    <!--/ Layout Demo -->
+    <!-- / Content -->
+{% endblock %}

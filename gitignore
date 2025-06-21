@@ -1,0 +1,44 @@
+# PyCharm
+.idea/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pkl
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+*.sqlite3
+
+# Environnement virtuel
+venv/
+.env
+.env.*
+
+# MLflow + cache
+mlruns/
+mlflow.db
+
+# Test artifacts
+coverage/
+*.cover
+htmlcov/
+
+# Build / dist
+build/
+dist/
+*.egg-info/
+
+# Docker
+*.tar
+docker-compose.override.yml

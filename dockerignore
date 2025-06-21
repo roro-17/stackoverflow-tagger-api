@@ -1,0 +1,31 @@
+__pycache__/
+*.pyc
+*.pyo
+*.pkl
+*.log
+
+# PyCharm & système
+.idea/
+.DS_Store
+
+# Git
+.git/
+.gitignore
+
+# Environnements
+.env
+venv/
+.env.*
+
+# Tests
+tests/
+htmlcov/
+coverage/
+
+# Artifacts ML
+mlruns/
+mlflow.db
+
+# Fichiers inutiles pour le container
+*.ipynb
+*.md

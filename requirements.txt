@@ -1,0 +1,17 @@
+flask
+joblib
+numpy
+pandas
+bs4
+scikit-learn
+nltk
+lxml    # ← AJOUT OBLIGATOIRE pour BeautifulSoup
+watchdog
+flasgger
+prometheus_flask_exporter
+pytest
+pytest-cov
+pytest-html
+mlflow
+prometheus_client
+gunicorn

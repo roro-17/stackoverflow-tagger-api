@@ -1,0 +1,14 @@
+name: stackoverflow-tagger-api
+
+docker_env:
+  image: stackoverflow-tagger-api:latest
+
+entry_points:
+  evaluate:
+    parameters:
+      input_path: {type: str, default: "data/test.csv"}
+      output_path: {type: str, default: "data/output/predictions.csv"}
+    command: >
+      python mlflow_recipes/steps/evaluate.py
+        --input_path {input_path}
+        --output_path {output_path}

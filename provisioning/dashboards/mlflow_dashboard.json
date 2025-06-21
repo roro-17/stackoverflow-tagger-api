@@ -1,0 +1,79 @@
+{
+  "dashboard": {
+    "id": null,
+    "uid": null,
+    "title": "MLflow Model Metrics",
+    "timezone": "browser",
+    "schemaVersion": 37,
+    "version": 1,
+    "refresh": "30s",
+    "panels": [
+      {
+        "type": "graph",
+        "title": "Average Precision (Macro)",
+        "targets": [
+          {
+            "expr": "mlflow_avg_precision_macro",
+            "legendFormat": "{{run_id}}",
+            "refId": "A"
+          }
+        ],
+        "datasource": "Prometheus",
+        "id": 1
+      },
+      {
+        "type": "graph",
+        "title": "Average Precision (Micro)",
+        "targets": [
+          {
+            "expr": "mlflow_avg_precision_micro",
+            "legendFormat": "{{run_id}}",
+            "refId": "B"
+          }
+        ],
+        "datasource": "Prometheus",
+        "id": 2
+      },
+      {
+        "type": "graph",
+        "title": "ROC AUC (Macro)",
+        "targets": [
+          {
+            "expr": "mlflow_roc_auc_macro",
+            "legendFormat": "{{run_id}}",
+            "refId": "C"
+          }
+        ],
+        "datasource": "Prometheus",
+        "id": 3
+      },
+      {
+        "type": "graph",
+        "title": "ROC AUC (Macro)",
+        "targets": [
+          {
+            "expr": "mlflow_roc_auc_macro",
+            "legendFormat": "{{run_id}}",
+            "refId": "D"
+          }
+        ],
+        "datasource": "Prometheus",
+        "id": 4
+      },
+      {
+        "type": "graph",
+        "title": "Inference Time (s)",
+        "targets": [
+          {
+            "expr": "mlflow_inference_time",
+            "legendFormat": "{{run_id}}",
+            "refId": "E"
+          }
+        ],
+        "datasource": "Prometheus",
+        "id": 5
+      }
+    ]
+  },
+  "overwrite": true
+}
