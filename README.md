@@ -47,4 +47,3 @@ mlflow run . -e evaluate -P input_path=data/test.csv -P output_path=predictions.
 
 👉 [Lien vers le dépôt GitHub](https://github.com/roro-17/stackoverflow-tagger-api.git)
 
-# stackoverflow-tagger-api

@@ -1,78 +1,68 @@
-name: CI/CD - StackOverflow Tagger API with Coverage and HTML Report
+name: CI/CD - Test et Déploiement automatique
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout du code
+      uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.11
+    - name: Configuration Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.11
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+    - name: Installation des dépendances
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
 
-      - name: Setup NLTK
-        run: python nltk_setup.py
+    - name: Téléchargement des ressources NLTK
+      run: python nltk_setup.py
 
-      - name: Run tests with coverage and HTML report
-        run: |
-          export PYTHONPATH=.
-          pytest --cov=app tests/ --cov-report=term-missing --html=test-report.html
+    - name: Exécution des tests avec couverture
+      run: |
+        pytest --cov=app tests/ --cov-report=html
 
-      - name: Archive test report
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-report
-          path: test-report.html
+    - name: Archivage du rapport de couverture
+      uses: actions/upload-artifact@v3
+      with:
+        name: rapport-couverture
+        path: htmlcov/
 
   deploy:
-    name: Build & Deploy to AWS
+    needs: test
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: read
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout du code
+      uses: actions/checkout@v3
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+    - name: Copier le projet vers le serveur
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_KEY }}
+        source: "."
+        target: "/home/ubuntu/app"
 
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-
-      - name: Build and push Docker image
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
-          IMAGE_TAG: ${{ github.sha }}
-        run: |
-          docker build -f docker/Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-
-      - name: Deploy to Amazon ECS
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-        with:
-          task-definition: ${{ secrets.ECS_TASK_DEFINITION }}
-          service: ${{ secrets.ECS_SERVICE_NAME }}
-          cluster: ${{ secrets.ECS_CLUSTER_NAME }}
-          wait-for-service-stability: true
+    - name: Déploiement via SSH
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_KEY }}
+        script: |
+          cd /home/ubuntu/app
+          docker compose down || true
+          docker compose up -d --build
+          echo "✅ Déploiement terminé"
+          echo "🩺 Vérification de l’API..."
+          curl -sSf http://localhost:5000/ || (echo "❌ L’API ne répond pas" && exit 1)
